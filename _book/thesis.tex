@@ -1,0 +1,702 @@
+% This is the Reed College LaTeX thesis template. Most of the work
+% for the document class was done by Sam Noble (SN), as well as this
+% template. Later comments etc. by Ben Salzberg (BTS). Additional
+% restructuring and APA support by Jess Youngberg (JY).
+% Your comments and suggestions are more than welcome; please email
+% them to cus@reed.edu
+%
+% See https://www.reed.edu/cis/help/LaTeX/index.html for help. There are a
+% great bunch of help pages there, with notes on
+% getting started, bibtex, etc. Go there and read it if you're not
+% already familiar with LaTeX.
+%
+% Any line that starts with a percent symbol is a comment.
+% They won't show up in the document, and are useful for notes
+% to yourself and explaining commands.
+% Commenting also removes a line from the document;
+% very handy for troubleshooting problems. -BTS
+
+% As far as I know, this follows the requirements laid out in
+% the 2002-2003 Senior Handbook. Ask a librarian to check the
+% document before binding. -SN
+
+%%
+%% Preamble
+%%
+% \documentclass{<something>} must begin each LaTeX document
+\documentclass[12pt,twoside]{reedthesis}
+% Packages are extensions to the basic LaTeX functions. Whatever you
+% want to typeset, there is probably a package out there for it.
+% Chemistry (chemtex), screenplays, you name it.
+% Check out CTAN to see: https://www.ctan.org/
+%%
+\usepackage{graphicx,latexsym}
+\usepackage{amsmath}
+\usepackage{amssymb,amsthm}
+\usepackage{longtable,booktabs,setspace}
+\usepackage{chemarr} %% Useful for one reaction arrow, useless if you're not a chem major
+\usepackage[hyphens]{url}
+% Added by CII
+\usepackage{hyperref}
+\usepackage{lmodern}
+\usepackage{float}
+\floatplacement{figure}{H}
+% Thanks, @Xyv
+\usepackage{calc}
+% End of CII addition
+\usepackage{rotating}
+
+% Next line commented out by CII
+%%% \usepackage{natbib}
+% Comment out the natbib line above and uncomment the following two lines to use the new
+% biblatex-chicago style, for Chicago A. Also make some changes at the end where the
+% bibliography is included.
+%\usepackage{biblatex-chicago}
+%\bibliography{thesis}
+
+
+% Added by CII (Thanks, Hadley!)
+% Use ref for internal links
+\renewcommand{\hyperref}[2][???]{\autoref{#1}}
+\def\chapterautorefname{Chapter}
+\def\sectionautorefname{Section}
+\def\subsectionautorefname{Subsection}
+% End of CII addition
+
+% Added by CII
+\usepackage{caption}
+\captionsetup{width=5in}
+% End of CII addition
+
+% \usepackage{times} % other fonts are available like times, bookman, charter, palatino
+
+% Syntax highlighting #22
+  \usepackage{color}
+  \usepackage{fancyvrb}
+  \newcommand{\VerbBar}{|}
+  \newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+  \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+  % Add ',fontsize=\small' for more characters per line
+  \usepackage{framed}
+  \definecolor{shadecolor}{RGB}{248,248,248}
+  \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+  \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+  \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+  \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+  \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+  \newcommand{\BuiltInTok}[1]{#1}
+  \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+  \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+  \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+  \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+  \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+  \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+  \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+  \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+  \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+  \newcommand{\ExtensionTok}[1]{#1}
+  \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+  \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+  \newcommand{\ImportTok}[1]{#1}
+  \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+  \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+  \newcommand{\NormalTok}[1]{#1}
+  \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+  \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+  \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+  \newcommand{\RegionMarkerTok}[1]{#1}
+  \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+  \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+  \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+  \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+  \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+  \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+
+% To pass between YAML and LaTeX the dollar signs are added by CII
+\title{\textbf{ Cambio en cuadernillo ICFES Saber 11 }}
+\author{\Large \textbf{ Jhon Alexander Bernal Muñoz }}
+% The month and year that you submit your FINAL draft TO THE LIBRARY (May or December)
+\date{2021}
+\division{Ciencias Económicas y administrativas}
+\advisor{William Fernando Acero}
+\institution{Universidad Santo Tomás}
+\degree{}
+%If you have two advisors for some reason, you can use the following
+% Uncommented out by CII
+% End of CII addition
+
+%%% Remember to use the correct department!
+\department{Estadística}
+% if you're writing a thesis in an interdisciplinary major,
+% uncomment the line below and change the text as appropriate.
+% check the Senior Handbook if unsure.
+%\thedivisionof{The Established Interdisciplinary Committee for}
+% if you want the approval page to say "Approved for the Committee",
+% uncomment the next line
+%\approvedforthe{Committee}
+
+% Added by CII
+%%% Copied from knitr
+%% maxwidth is the original width if it's less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+% From {rticles}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+% for Pandoc 2.8 to 2.10.1
+\newenvironment{cslreferences}%
+  {}%
+  {\par}
+% For Pandoc 2.11+
+% As noted by @mirh [2] is needed instead of [3] for 2.12
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{calc} % for calculating minipage widths
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\renewcommand{\contentsname}{Table of Contents}
+% End of CII addition
+
+\setlength{\parskip}{0pt}
+
+% Added by CII
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\Acknowledgements{
+
+}
+
+\Dedication{
+You can have a dedication here if you wish.
+}
+
+\Preface{
+This is an example of a thesis setup to use the reed thesis document class
+(for LaTeX) and the R bookdown package, in general.
+}
+
+\Abstract{
+The preface pretty much says it all.
+
+\par
+
+Second paragraph of abstract starts here.
+}
+
+	\usepackage{booktabs}
+ \usepackage{longtable}
+ \usepackage{array}
+ \usepackage{multirow}
+ \usepackage{wrapfig}
+ \usepackage{float}
+ \usepackage{colortbl}
+ \usepackage{pdflscape}
+ \usepackage{tabu}
+ \usepackage{threeparttable}
+ \usepackage{threeparttablex}
+ \usepackage[normalem]{ulem}
+ \usepackage{makecell}
+ \usepackage{xcolor}
+% End of CII addition
+%%
+%% End Preamble
+%%
+%
+\begin{document}
+
+% Everything below added by CII
+  \maketitle
+
+\frontmatter % this stuff will be roman-numbered
+\pagestyle{empty} % this removes page numbers from the frontmatter
+
+  \begin{preface}
+    This is an example of a thesis setup to use the reed thesis document class
+    (for LaTeX) and the R bookdown package, in general.
+  \end{preface}
+  \hypersetup{linkcolor=black}
+  \setcounter{secnumdepth}{2}
+  \setcounter{tocdepth}{2}
+  \tableofcontents
+
+  \listoftables
+
+  \listoffigures
+  \begin{abstract}
+    The preface pretty much says it all.
+
+    \par
+
+    Second paragraph of abstract starts here.
+  \end{abstract}
+  \begin{dedication}
+    You can have a dedication here if you wish.
+  \end{dedication}
+\mainmatter % here the regular arabic numbering starts
+\pagestyle{fancyplain} % turns page numbering back on
+
+\hypertarget{introducciuxf3n}{%
+\chapter*{Introducción}\label{introducciuxf3n}}
+\addcontentsline{toc}{chapter}{Introducción}
+
+Comúnmente el análisis de datos de educación se enfoca en encontrar interacciones entre estudiantes y ámbitos demográficos o de entorno, esto se debe a que de alguna forma es posible generalizar que el resultado de una prueba se ve influida por variables como el lugar de residencia o el nivel socio-económico del estudiante. Por otra parte es claro que dichos datos de educación tienen estructuras jerárquicas que pueden ser de interés general, por ejemplo, Departamento de residencia, estrato, ubicación de la institución educativa, si es rural o urbana, si el establecimiento educativo es mixto o no, entre otras. Generalmente, las visualizaciones de personas en muestras de numerosas fases no son independientes, estas condiciones de datos no tienen la posibilidad de analizarse por medio de un modelo estadístico estándar que tiene supuestos precisos sobre la libertad de las visualizaciones personales. Las violaciones de dichos supuestos plantean inconvenientes con la inferencia de límites del modelo en el estudio estadístico tradicional. Adicional a esto, es también común en la entrega de resultados de pruebas educativas evadir agregaciones en los datos con el ánimo de estandarizar entregas, sin embargo, es posible que el análisis pueda llevara interpretaciones erradas lo que se puede catalogar como un caso de la paradoja de Simpson o efecto Yule-Simpson.
+
+En teoría, antes de diseñar un estudio experimental, se debe tener una pregunta de investigación precisa que se quiere resolver y luego se diseña un método de recolección de datos, que permita el despliegue de modelos que solución la cuestión en discusión. sin embargo, es común encontrarse con casos en los que se recopilan grandes cantidades de datos y luego se plantean preguntas.
+
+Este enfoque es permisible, pero es útil para investigar relaciones que no se tenían como prioridad o se desconocía que podían generarse durante la etapa de diseño y por ende aborda con diferente enfoque el diseño realizado. En este caso se pierde un factor clave en la investigación, la aleatorización de la selección, cuyo objetivo es mantener ``bajo control'' todos los efectos que no se pueden controlar en el experimento. Pero puede tiene ventajas metodológicas y logísticas reduciendo tiempos y costos de recolección.
+
+Para evaluar impactos o cambios en resultados a través del tiempo, la literatura es amplia y en particular para este trabajo se toma como punto de partida la relación más simple, utilizando desde un ANOVA de una vía hasta evaluar modelos mixtos, pasando por diferencias en diferencias, MANOVA, ANCOVA, MANCOVA. La idea general es poder indagar si a mayor nivel de agregación se presenta en los resultados la llamada paradoja de Simpson pues se parte de la hipótesis de que dado el diseño por Bloques Incompletos Balanceados (BIB) de la prueba, el efecto en los resultados debería ser nulo.
+
+El capitulo 1 explora el conjunto de datos Saber 11 del Icfes desde el año 2011 hasta el año 2019.
+
+En el capítulo 2 se profundizará (marco teorico) detrás de las diferentes metodologías a abordar para evaluar la problemática planteada.
+
+(metodología) El capítulo 3 aborda la problemática central del trabajo, implementando diferentes modelos de los revisados en el capítulo 2 y se comparan los resultados.
+
+Por último (resultados y conclusiones) encontradas y se abre puerta a la implementación de otras metodologías en trabajos posteriores.
+
+\hypertarget{EDA}{%
+\chapter{Análisis exploratorio de datos}\label{EDA}}
+
+\hypertarget{introducciuxf3n-1}{%
+\section*{Introducción}\label{introducciuxf3n-1}}
+\addcontentsline{toc}{section}{Introducción}
+
+Para este trabajo buscamos encontrar patrones que nos permitan determinar si estadísticamente existe efecto, en el puntaje global de la prueba explorando los diferentes niveles que entrega la prueba, como el sector de la institución {[}Oficial o Privado{]}, la jornada {[}Diurna o Nocturna{]}, el municipio, el departamento, el género de los estudiantes, etc.
+
+\hypertarget{cuadernillo}{%
+\section{Pruebas Saber - Formato del cuadernillo}\label{cuadernillo}}
+
+El Examen de Estado de la Educación Media, ICFES SABER 11, que aplica el Instituto Colombiano para la Evaluación de la Educación (ICFES) es un instrumento estandarizado para la evaluación externa, que conjuntamente con los exámenes que se aplican en los grados 5, 9 y al finalizar el pregrado, hace parte de los instrumentos que conforman el Sistema Nacional de Evaluación. Además de ser una herramienta que retroalimenta al Sistema Educativo.
+
+A partir de 2018 las pruebas saber 11 se llevan a cabo con un cambio en el formato del cuadernillo, los cuadernillos plegados se utilizaban en su mayoría para las pruebas Saber 11 o en algunas formas de los cuadernillos de las pruebas Saber T y T y Saber Pro, cuando la cantidad de páginas era desde 12 hasta 36 páginas y se lograba bajo impresión en tecnologías offset, donde el cuadernillo se imprimía en un pliego de papel y posteriormente se plegada para quedar en el tamaño de 1/16avo. Por su lado, los cuadernillos cosidos se utilizaban en mayor medida en las pruebas Saber Pro y T y T, cuando la variabilidad de estos y la cantidad de preguntas sobrepasaban las 36 páginas. Si bien estos se podían imprimir en tecnología offset, había que realizar un paso adicional y era refilar el pliego en cuartillas para después pasar al proceso de cosido.
+
+La primera aproximación al estándar de cuadernillos se dio cuando la entidad paso de solicitar requerimientos de impresión offset a impresión digital en el año 2017 con la prueba Patrulleros, con esta prueba se encontró que las máquinas de impresión digital solo imprimían en cuartillas, esto implica que esta metodología restringe la impresión a cuadernillos cosidos, sin embargo esto permitía tener mayor variabilidad de formas, color y bondades, como la marca de agua.
+
+Claramente la prueba de ascenso patrulleros es un referente que permite demostrar que este proceso de impresión fue exitoso para la prevención y detección de fraude, y, por lo tanto, sustenta en parte la decisión de la Entidad de la impresión de las pruebas de Estado. Cabe aclarar que en la vigencia 2017, para prevención y detección de fraude, se solicitó la inclusión, en el cuadernillo, de un código alfanumérico conformado por 3 bloques de 4 caracteres con el fin de eliminar la codificación de la forma que se encontraba visible en el cuadernillo impreso. Sin embargo, no fue posible su aplicación y por tanto no se obtuvieron los resultados esperados, teniendo en cuenta que la tecnología offset no permitía que dicho código incluyera una parte aleatoria por examinado.
+
+Se debe tener en cuenta que para pruebas bajo metodologías de Bloques Incompletos Balanceados (BIB), como las que aplica el Icfes, las tecnologías basadas en impresión digital favorecen los procesos cuando el número de formas es muy variable, como es el caso de las pruebas de Estado. Asimismo, la marca de agua, que es una de las bondades que ha identificado el Icfes, permite disuadir y/o identificar al examinando que toma fotos del material.
+
+Hacia el equipo de trabajo el cambio lo solicitó la Dirección de Producción y Operaciones y la Subdirección de Aplicación de Instrumentos. Surgió a partir de la prueba patrulleros 2017 donde se incursionó en impresión digital con alta variabilidad y marca de agua e impresión a color de cuadernillos cosido al caballete.
+
+A pesar de que el cambio representa muchas ventajas para la entidad en términos de control, por ejemplo el fraude, no hay un estudio oficial que evalúe si este cambio tuvo algún efecto en el resultado de las pruebas.
+
+\hypertarget{eda_numb}{%
+\section{Análisis de datos}\label{eda_numb}}
+
+Los datos utilizados pueden ser consultados en \href{https://www.datos.gov.co/}{www.datos.gov.co} o en \href{https://www.icfes.gov.co/investigadores-y-estudiantes-posgrado/acceso-a-bases-de-datos}{www.icfes.gov.co}.
+
+Para el objeto de este trabajo, se tiene en cuenta que para las aplicaciones a partir de 2018 hay un nuevo cuadernillo por lo que para este trabajo se toman cuatro aplicaciones antes del cambio y cuatro después del cambio con el fin de controlar de forma sintética el balance entre grupos.
+
+Los datos corresponden en total a 2.270.279 estudiantes que han presentados las pruebas de estado saber 11 desde 2016 hasta 2019, de los cuales 1.120.523 presentaron la prueba antes del cambio y 1.129.756 estudiantes después.
+
+Aunque parece un tema de poca magnitud, gráficamente, como se ve en la figura \ref{bar_cuad_periodo} es posible evidenciar que existe algún tipo de relación entre el cambio de cuadernillo y un descenso en el puntaje global:
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos }\OtherTok{\textless{}{-}}\NormalTok{ saber11 }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(PERIODO, CUADERNILLO) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{PUNT\_GLOBAL =} \FunctionTok{mean}\NormalTok{(PUNT\_GLOBAL))}
+\end{Highlighting}
+\end{Shaded}
+\begin{verbatim}
+`summarise()` has grouped output by 'PERIODO'. You can override using the `.groups` argument.
+\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ PERIODO, }\AttributeTok{y=}\NormalTok{PUNT\_GLOBAL, }\AttributeTok{fill =}\NormalTok{ CUADERNILLO),}
+           \AttributeTok{stat=}\StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{ (}\StringTok{"Puntaje  global promedio"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{ (}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{label=}\NormalTok{comma,}
+                     \AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{max}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{PUNT\_GLOBAL)}\SpecialCharTok{+}
+\NormalTok{                                  (}\FunctionTok{mean}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{PUNT\_GLOBAL)}\SpecialCharTok{/}\DecValTok{4}\NormalTok{))) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ PERIODO, }\AttributeTok{y =}\NormalTok{ PUNT\_GLOBAL,}
+                              \AttributeTok{label=}\FunctionTok{round}\NormalTok{(PUNT\_GLOBAL, }\DecValTok{1}\NormalTok{)),}
+            \AttributeTok{position=}\FunctionTok{position\_dodge}\NormalTok{(}\AttributeTok{width =} \FloatTok{0.5}\NormalTok{), }\AttributeTok{vjust=}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{size =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"bottom"}\NormalTok{,}
+        \AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle=}\DecValTok{90}\NormalTok{))}
+
+\NormalTok{datos }\OtherTok{\textless{}{-}}\NormalTok{ saber11 }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(PERIODO, CUADERNILLO) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{counting =} \FunctionTok{n\_distinct}\NormalTok{(ESTU\_CONSECUTIVO))}
+\end{Highlighting}
+\end{Shaded}
+\begin{verbatim}
+`summarise()` has grouped output by 'PERIODO'. You can override using the `.groups` argument.
+\end{verbatim}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ PERIODO, }\AttributeTok{y=}\NormalTok{counting, }\AttributeTok{fill =}\NormalTok{ CUADERNILLO),}
+           \AttributeTok{stat=}\StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{ (}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{label=}\NormalTok{comma,}
+                     \AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{max}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{counting)}\SpecialCharTok{+}
+\NormalTok{                                  (}\FunctionTok{mean}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{counting)}\SpecialCharTok{/}\DecValTok{2}\NormalTok{))) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ PERIODO,}
+                              \AttributeTok{y=}\NormalTok{counting, }\AttributeTok{label=}\FunctionTok{round}\NormalTok{(counting, }\DecValTok{1}\NormalTok{)),}
+            \AttributeTok{position=}\FunctionTok{position\_dodge}\NormalTok{(}\AttributeTok{width =} \FloatTok{0.5}\NormalTok{), }\AttributeTok{vjust=}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{size =} \DecValTok{2}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"bottom"}\NormalTok{,}
+        \AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle=}\DecValTok{90}\NormalTok{))}
+\NormalTok{mylegend}\OtherTok{\textless{}{-}}\FunctionTok{g\_legend}\NormalTok{(p1)}
+
+\FunctionTok{grid.arrange}\NormalTok{(p1 }\SpecialCharTok{+} \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"none"}\NormalTok{),}
+\NormalTok{                   p2 }\SpecialCharTok{+} \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"none"}\NormalTok{),}
+\NormalTok{                   mylegend,}
+                   \AttributeTok{layout\_matrix =} \FunctionTok{rbind}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{),}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{)),}
+                   \AttributeTok{heights=}\FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+\begin{figure}
+\centering
+\includegraphics{thesis_files/figure-latex/bar_cuad_periodo-1.pdf}
+\caption{(\#fig:bar\_cuad\_periodo)Distribución de los estudiantes por periodo de aplicación}
+\end{figure}
+\hypertarget{math-sci}{%
+\chapter{Mathematics and Science}\label{math-sci}}
+
+\hypertarget{math}{%
+\section{Math}\label{math}}
+
+\TeX~is the best way to typeset mathematics. Donald Knuth designed \TeX~when he got frustrated at how long it was taking the typesetters to finish his book, which contained a lot of mathematics. One nice feature of \emph{R Markdown} is its ability to read LaTeX code directly.
+
+If you are doing a thesis that will involve lots of math, you will want to read the following section which has been commented out. If you're not going to use math, skip over or delete this next commented section.
+
+\hypertarget{chemistry-101-symbols}{%
+\section{Chemistry 101: Symbols}\label{chemistry-101-symbols}}
+
+Chemical formulas will look best if they are not italicized. Get around math mode's automatic italicizing in LaTeX by using the argument \texttt{\$\textbackslash{}mathrm\{formula\ here\}\$}, with your formula inside the curly brackets. (Notice the use of the backticks here which enclose text that acts as code.)
+
+So, \(\mathrm{Fe_2^{2+}Cr_2O_4}\) is written \texttt{\$\textbackslash{}mathrm\{Fe\_2\^{}\{2+\}Cr\_2O\_4\}\$}.
+
+\noindent Exponent or Superscript: \(\mathrm{O^-}\)
+
+\noindent Subscript: \(\mathrm{CH_4}\)
+
+To stack numbers or letters as in \(\mathrm{Fe_2^{2+}}\), the subscript is defined first, and then the superscript is defined.
+
+\noindent Bullet: CuCl \(\bullet\) \(\mathrm{7H_{2}O}\)
+
+\noindent Delta: \(\Delta\)
+
+\noindent Reaction Arrows: \(\longrightarrow\) or \(\xrightarrow{solution}\)
+
+\noindent Resonance Arrows: \(\leftrightarrow\)
+
+\noindent Reversible Reaction Arrows: \(\rightleftharpoons\)
+
+\hypertarget{typesetting-reactions}{%
+\subsection{Typesetting reactions}\label{typesetting-reactions}}
+
+You may wish to put your reaction in an equation environment, which means that LaTeX will place the reaction where it fits and will number the equations for you.
+\begin{equation}
+  \mathrm{C_6H_{12}O_6  + 6O_2} \longrightarrow \mathrm{6CO_2 + 6H_2O}
+  \label{eq:reaction}
+\end{equation}
+We can reference this combustion of glucose reaction via Equation \eqref{eq:reaction}.
+
+\hypertarget{other-examples-of-reactions}{%
+\subsection{Other examples of reactions}\label{other-examples-of-reactions}}
+
+\(\mathrm{NH_4Cl_{(s)}}\) \(\rightleftharpoons\) \(\mathrm{NH_{3(g)}+HCl_{(g)}}\)
+
+\noindent \(\mathrm{MeCH_2Br + Mg}\) \(\xrightarrow[below]{above}\) \(\mathrm{MeCH_2\bullet Mg \bullet Br}\)
+
+\hypertarget{physics}{%
+\section{Physics}\label{physics}}
+
+Many of the symbols you will need can be found on the math page \url{https://web.reed.edu/cis/help/latex/math.html} and the Comprehensive LaTeX Symbol Guide (\url{https://mirror.utexas.edu/ctan/info/symbols/comprehensive/symbols-letter.pdf}).
+
+\hypertarget{biology}{%
+\section{Biology}\label{biology}}
+
+You will probably find the resources at \url{https://www.lecb.ncifcrf.gov/~toms/latex.html} helpful, particularly the links to bsts for various journals. You may also be interested in TeXShade for nucleotide typesetting (\url{https://homepages.uni-tuebingen.de/beitz/txe.html}). Be sure to read the proceeding chapter on graphics and tables.
+
+\hypertarget{ref-labels}{%
+\chapter{Graphics, References, and Labels}\label{ref-labels}}
+
+\hypertarget{figures}{%
+\section{Figures}\label{figures}}
+
+If your thesis has a lot of figures, \emph{R Markdown} might behave better for you than that other word processor. One perk is that it will automatically number the figures accordingly in each chapter. You'll also be able to create a label for each figure, add a caption, and then reference the figure in a way similar to what we saw with tables earlier. If you label your figures, you can move the figures around and \emph{R Markdown} will automatically adjust the numbering for you. No need for you to remember! So that you don't have to get too far into LaTeX to do this, a couple \textbf{R} functions have been created for you to assist. You'll see their use below.
+
+In the \textbf{R} chunk below, we will load in a picture stored as \texttt{reed.jpg} in our main directory. We then give it the caption of ``Reed logo,'' the label of ``reedlogo,'' and specify that this is a figure. Make note of the different \textbf{R} chunk options that are given in the R Markdown file (not shown in the knitted document).
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{include\_graphics}\NormalTok{(}\AttributeTok{path =} \StringTok{"figure/reed.jpg"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\begin{figure}
+
+{\centering \includegraphics[width=0.2\linewidth]{figure/reed} 
+
+}
+
+\caption{Reed logo}\label{fig:reedlogo}
+\end{figure}
+Here is a reference to the Reed logo: Figure \ref{fig:reedlogo}. Note the use of the \texttt{fig:} code here. By naming the \textbf{R} chunk that contains the figure, we can then reference that figure later as done in the first sentence here. We can also specify the caption for the figure via the R chunk option \texttt{fig.cap}.
+
+\clearpage
+
+Below we will investigate how to save the output of an \textbf{R} plot and label it in a way similar to that done above. Recall the \texttt{flights} dataset from Chapter \ref{eda}. (Note that we've shown a different way to reference a section or chapter here.) We will next explore a bar graph with the mean flight departure delays by airline from Portland for 2014.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# mean\_delay\_by\_carrier \textless{}{-} flights \%\textgreater{}\%}
+\CommentTok{\#   group\_by(carrier) \%\textgreater{}\%}
+\CommentTok{\#   summarize(mean\_dep\_delay = mean(dep\_delay))}
+\CommentTok{\# ggplot(mean\_delay\_by\_carrier, aes(x = carrier, y = mean\_dep\_delay)) +}
+\CommentTok{\#   geom\_bar(position = "identity", stat = "identity", fill = "red")}
+\end{Highlighting}
+\end{Shaded}
+Here is a reference to this image: Figure \ref{fig:delaysboxplot}.
+
+A table linking these carrier codes to airline names is available at \url{https://github.com/ismayc/pnwflights14/blob/master/data/airlines.csv}.
+
+\clearpage
+
+Next, we will explore the use of the \texttt{out.extra} chunk option, which can be used to shrink or expand an image loaded from a file by specifying \texttt{"scale=\ "}. Here we use the mathematical graph stored in the ``subdivision.pdf'' file.
+\begin{figure}
+\includegraphics[scale=0.75]{figure/subdivision} \caption{Subdiv. graph}\label{fig:subd}
+\end{figure}
+Here is a reference to this image: Figure \ref{fig:subd}. Note that \texttt{echo=FALSE} is specified so that the \textbf{R} code is hidden in the document.
+
+\textbf{More Figure Stuff}
+
+Lastly, we will explore how to rotate and enlarge figures using the \texttt{out.extra} chunk option. (Currently this only works in the PDF version of the book.)
+\begin{figure}
+\includegraphics[angle=180, scale=1.1]{figure/subdivision} \caption{A Larger Figure, Flipped Upside Down}\label{fig:subd2}
+\end{figure}
+As another example, here is a reference: Figure \ref{fig:subd2}.
+
+\hypertarget{footnotes-and-endnotes}{%
+\section{Footnotes and Endnotes}\label{footnotes-and-endnotes}}
+
+You might want to footnote something.\footnote{footnote text} The footnote will be in a smaller font and placed appropriately. Endnotes work in much the same way. More information can be found about both on the CUS site or feel free to reach out to \href{mailto:data@reed.edu}{\nolinkurl{data@reed.edu}}.
+
+\hypertarget{bibliographies}{%
+\section{Bibliographies}\label{bibliographies}}
+
+Of course you will need to cite things, and you will probably accumulate an armful of sources. There are a variety of tools available for creating a bibliography database (stored with the .bib extension). In addition to BibTeX suggested below, you may want to consider using the free and easy-to-use tool called Zotero. The Reed librarians have created Zotero documentation at \url{https://libguides.reed.edu/citation/zotero}. In addition, a tutorial is available from Middlebury College at \url{https://sites.middlebury.edu/zoteromiddlebury/}.
+
+\emph{R Markdown} uses \emph{pandoc} (\url{https://pandoc.org/}) to build its bibliographies. One nice caveat of this is that you won't have to do a second compile to load in references as standard LaTeX requires. To cite references in your thesis (after creating your bibliography database), place the reference name inside square brackets and precede it by the ``at'' symbol. For example, here's a reference to a book about worrying: (Molina \& Borkovec, 1994). This \texttt{Molina1994} entry appears in a file called \texttt{thesis.bib} in the \texttt{bib} folder. This bibliography database file was created by a program called BibTeX. You can call this file something else if you like (look at the YAML header in the main .Rmd file) and, by default, is to placed in the \texttt{bib} folder.
+
+For more information about BibTeX and bibliographies, see our CUS site (\url{https://web.reed.edu/cis/help/latex/index.html})\footnote{Reed~College (2007)}. There are three pages on this topic: \emph{bibtex} (which talks about using BibTeX, at \url{https://web.reed.edu/cis/help/latex/bibtex.html}), \emph{bibtexstyles} (about how to find and use the bibliography style that best suits your needs, at \url{https://web.reed.edu/cis/help/latex/bibtexstyles.html}) and \emph{bibman} (which covers how to make and maintain a bibliography by hand, without BibTeX, at \url{https://web.reed.edu/cis/help/latex/bibman.html}). The last page will not be useful unless you have only a few sources.
+
+If you look at the YAML header at the top of the main .Rmd file you can see that we can specify the style of the bibliography by referencing the appropriate csl file. You can download a variety of different style files at \url{https://www.zotero.org/styles}. Make sure to download the file into the csl folder.
+
+\vfill
+
+\textbf{Tips for Bibliographies}
+\begin{itemize}
+\tightlist
+\item
+  Like with thesis formatting, the sooner you start compiling your bibliography for something as large as thesis, the better. Typing in source after source is mind-numbing enough; do you really want to do it for hours on end in late April? Think of it as procrastination.
+\item
+  The cite key (a citation's label) needs to be unique from the other entries.
+\item
+  When you have more than one author or editor, you need to separate each author's name by the word ``and'' e.g.~\texttt{Author\ =\ \{Noble,\ Sam\ and\ Youngberg,\ Jessica\},}.
+\item
+  Bibliographies made using BibTeX (whether manually or using a manager) accept LaTeX markup, so you can italicize and add symbols as necessary.
+\item
+  To force capitalization in an article title or where all lowercase is generally used, bracket the capital letter in curly braces.
+\item
+  You can add a Reed Thesis citation\footnote{Noble (2002)} option. The best way to do this is to use the phdthesis type of citation, and use the optional ``type'' field to enter ``Reed thesis'' or ``Undergraduate thesis.''
+\end{itemize}
+\hypertarget{anything-else}{%
+\section{Anything else?}\label{anything-else}}
+
+If you'd like to see examples of other things in this template, please contact the Data @ Reed team (email \href{mailto:data@reed.edu}{\nolinkurl{data@reed.edu}}) with your suggestions. We love to see people using \emph{R Markdown} for their theses, and are happy to help.
+
+\hypertarget{conclusion}{%
+\chapter*{Conclusion}\label{conclusion}}
+\addcontentsline{toc}{chapter}{Conclusion}
+
+If we don't want Conclusion to have a chapter number next to it, we can add the \texttt{\{-\}} attribute.
+
+\textbf{More info}
+
+And here's some other random info: the first paragraph after a chapter title or section head \emph{shouldn't be} indented, because indents are to tell the reader that you're starting a new paragraph. Since that's obvious after a chapter or section title, proper typesetting doesn't add an indent there.
+
+\appendix
+
+\hypertarget{the-first-appendix}{%
+\chapter{The First Appendix}\label{the-first-appendix}}
+
+This first appendix includes all of the R chunks of code that were hidden throughout the document (using the \texttt{include\ =\ FALSE} chunk tag) to help with readibility and/or setup.
+
+\textbf{In the main Rmd file}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This chunk ensures that the thesisdown package is}
+\CommentTok{\# installed and loaded. This thesisdown package includes}
+\CommentTok{\# the template files for the thesis.}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(remotes)) \{}
+  \ControlFlowTok{if}\NormalTok{ (params}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Install needed packages for \{thesisdown\}}\StringTok{\textasciigrave{}}\NormalTok{) \{}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"remotes"}\NormalTok{, }\AttributeTok{repos =} \StringTok{"https://cran.rstudio.com"}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{stop}\NormalTok{(}
+      \FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}You need to run install.packages("remotes")",}
+\StringTok{            "first in the Console.\textquotesingle{}}\NormalTok{)}
+\NormalTok{    )}
+\NormalTok{  \}}
+\NormalTok{\}}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(thesisdown)) \{}
+  \ControlFlowTok{if}\NormalTok{ (params}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Install needed packages for \{thesisdown\}}\StringTok{\textasciigrave{}}\NormalTok{) \{}
+\NormalTok{    remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"ismayc/thesisdown"}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{stop}\NormalTok{(}
+      \FunctionTok{paste}\NormalTok{(}
+        \StringTok{"You need to run"}\NormalTok{,}
+        \StringTok{\textquotesingle{}remotes::install\_github("ismayc/thesisdown")\textquotesingle{}}\NormalTok{,}
+        \StringTok{"first in the Console."}
+\NormalTok{      )}
+\NormalTok{    )}
+\NormalTok{  \}}
+\NormalTok{\}}
+\FunctionTok{library}\NormalTok{(thesisdown)}
+\CommentTok{\# Set how wide the R output will go}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{width =} \DecValTok{70}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\textbf{In Chapter \ref{ref-labels}:}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This chunk ensures that the thesisdown package is}
+\CommentTok{\# installed and loaded. This thesisdown package includes}
+\CommentTok{\# the template files for the thesis and also two functions}
+\CommentTok{\# used for labeling and referencing}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(remotes)) \{}
+  \ControlFlowTok{if}\NormalTok{ (params}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Install needed packages for \{thesisdown\}}\StringTok{\textasciigrave{}}\NormalTok{) \{}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"remotes"}\NormalTok{, }\AttributeTok{repos =} \StringTok{"https://cran.rstudio.com"}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{stop}\NormalTok{(}
+      \FunctionTok{paste}\NormalTok{(}
+        \StringTok{\textquotesingle{}You need to run install.packages("remotes")\textquotesingle{}}\NormalTok{,}
+        \StringTok{"first in the Console."}
+\NormalTok{      )}
+\NormalTok{    )}
+\NormalTok{  \}}
+\NormalTok{\}}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(dplyr)) \{}
+  \ControlFlowTok{if}\NormalTok{ (params}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Install needed packages for \{thesisdown\}}\StringTok{\textasciigrave{}}\NormalTok{) \{}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{, }\AttributeTok{repos =} \StringTok{"https://cran.rstudio.com"}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{stop}\NormalTok{(}
+      \FunctionTok{paste}\NormalTok{(}
+        \StringTok{\textquotesingle{}You need to run install.packages("dplyr")\textquotesingle{}}\NormalTok{,}
+        \StringTok{"first in the Console."}
+\NormalTok{      )}
+\NormalTok{    )}
+\NormalTok{  \}}
+\NormalTok{\}}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(ggplot2)) \{}
+  \ControlFlowTok{if}\NormalTok{ (params}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Install needed packages for \{thesisdown\}}\StringTok{\textasciigrave{}}\NormalTok{) \{}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{, }\AttributeTok{repos =} \StringTok{"https://cran.rstudio.com"}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{stop}\NormalTok{(}
+      \FunctionTok{paste}\NormalTok{(}
+        \StringTok{\textquotesingle{}You need to run install.packages("ggplot2")\textquotesingle{}}\NormalTok{,}
+        \StringTok{"first in the Console."}
+\NormalTok{      )}
+\NormalTok{    )}
+\NormalTok{  \}}
+\NormalTok{\}}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(bookdown)) \{}
+  \ControlFlowTok{if}\NormalTok{ (params}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Install needed packages for \{thesisdown\}}\StringTok{\textasciigrave{}}\NormalTok{) \{}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"bookdown"}\NormalTok{, }\AttributeTok{repos =} \StringTok{"https://cran.rstudio.com"}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{stop}\NormalTok{(}
+      \FunctionTok{paste}\NormalTok{(}
+        \StringTok{\textquotesingle{}You need to run install.packages("bookdown")\textquotesingle{}}\NormalTok{,}
+        \StringTok{"first in the Console."}
+\NormalTok{      )}
+\NormalTok{    )}
+\NormalTok{  \}}
+\NormalTok{\}}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(thesisdown)) \{}
+  \ControlFlowTok{if}\NormalTok{ (params}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Install needed packages for \{thesisdown\}}\StringTok{\textasciigrave{}}\NormalTok{) \{}
+\NormalTok{    remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"ismayc/thesisdown"}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{stop}\NormalTok{(}
+      \FunctionTok{paste}\NormalTok{(}
+        \StringTok{"You need to run"}\NormalTok{,}
+        \StringTok{\textquotesingle{}remotes::install\_github("ismayc/thesisdown")\textquotesingle{}}\NormalTok{,}
+        \StringTok{"first in the Console."}
+\NormalTok{      )}
+\NormalTok{    )}
+\NormalTok{  \}}
+\NormalTok{\}}
+\FunctionTok{library}\NormalTok{(thesisdown)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(knitr)}
+\NormalTok{flights }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/flights.csv"}\NormalTok{, }\AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\hypertarget{the-second-appendix-for-fun}{%
+\chapter{The Second Appendix, for Fun}\label{the-second-appendix-for-fun}}
+
+\backmatter
+
+\hypertarget{references}{%
+\chapter*{References}\label{references}}
+\addcontentsline{toc}{chapter}{References}
+
+\markboth{References}{References}
+
+\noindent
+
+\setlength{\parindent}{-0.20in}
+\setlength{\leftskip}{0.20in}
+\setlength{\parskip}{8pt}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-angel2000}{}}%
+Angel, E. (2000). \emph{Interactive computer graphics : A top-down approach with OpenGL}. Boston, MA: Addison Wesley Longman.
+
+\leavevmode\vadjust pre{\hypertarget{ref-angel2001}{}}%
+Angel, E. (2001a). \emph{Batch-file computer graphics : A bottom-up approach with QuickTime}. Boston, MA: Wesley Addison Longman.
+
+\leavevmode\vadjust pre{\hypertarget{ref-angel2002a}{}}%
+Angel, E. (2001b). \emph{Test second book by angel}. Boston, MA: Wesley Addison Longman.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Molina1994}{}}%
+Molina, S. T., \& Borkovec, T. D. (1994). The {P}enn {S}tate worry questionnaire: Psychometric properties and associated characteristics. In G. C. L. Davey \& F. Tallis (Eds.), \emph{Worrying: Perspectives on theory, assessment and treatment} (pp. 265--283). New York: Wiley.
+
+\leavevmode\vadjust pre{\hypertarget{ref-noble2002}{}}%
+Noble, S. G. (2002). \emph{Turning images into simple line-art} (Undergraduate thesis). Reed College.
+
+\leavevmode\vadjust pre{\hypertarget{ref-reedweb2007}{}}%
+Reed~College. (2007). LaTeX your document. Retrieved from \url{https://web.reed.edu/cis/help/LaTeX/index.html}
+
+\end{CSLReferences}
+
+% Index?
+
+\end{document}

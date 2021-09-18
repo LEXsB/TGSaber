@@ -1,0 +1,117 @@
+---
+title: \textbf{ Cambio en cuadernillo ICFES Saber 11 }
+author: \Large \textbf{ Jhon Alexander Bernal Muñoz } 
+date: '2021'
+institution: 'Universidad Santo Tomás'
+division: 'Ciencias Económicas y administrativas'
+advisor: William Fernando Acero 
+# If you have more two advisors, un-silence line 7
+#altadvisor: 'Your Other Advisor'
+department: 'Estadística'
+# degree: 'Bachelor of Arts'
+knit: bookdown::render_book
+site: bookdown::bookdown_site
+
+# This will automatically install the {remotes} package and {thesisdown}
+# Change this to FALSE if you'd like to install them manually on your own.
+params:
+  'Install needed packages for {thesisdown}': True
+  
+# Remove the hashtag to specify which version of output you would like.
+# Can only choose one at a time.
+output:
+   thesisdown::thesis_pdf
+#  thesisdown::thesis_pdf: default 
+#  thesisdown::thesis_gitbook: default         
+#  thesisdown::thesis_word: default
+#  thesisdown::thesis_epub: default
+
+# If you are creating a PDF you'll need to write your preliminary content 
+# (e.g., abstract, acknowledgements) below or use code similar to line 25-26 
+# for the .RMD files. If you are NOT producing a PDF, delete or silence
+# lines 25-39 in this YAML header.
+abstract: '`r if(knitr:::is_latex_output()) paste(readLines(here::here("prelims", "00-abstract.Rmd")), collapse = "\n  ")`'
+# If you'd rather include the preliminary content in files instead of inline
+# like below, use a command like that for the abstract above.  Note that a tab 
+# is needed on the line after the `|`.
+# acknowledgements: |
+#   I want to thank a few people.
+dedication: |
+  You can have a dedication here if you wish. 
+preface: |
+  This is an example of a thesis setup to use the reed thesis document class 
+  (for LaTeX) and the R bookdown package, in general.
+  
+# Specify the location of the bibliography below
+bibliography: bib/thesis.bib
+# Download your specific csl file and refer to it in the line below.
+csl: csl/apa.csl
+lot: true
+lof: true
+# Token GitHub
+# User GitLab: LEXsB
+# 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
+---
+
+```{r include_packages, include=FALSE, warning=FALSE, echo=FALSE, error=FALSE}
+# This chunk ensures that the thesisdown package is
+# installed and loaded. This thesisdown package includes
+# the template files for the thesis.
+if (!require(remotes)) {
+  if (params$`Install needed packages for {thesisdown}`) {
+    install.packages("remotes", repos = "https://cran.rstudio.com")
+  } else {
+    stop(
+      paste('You need to run install.packages("remotes")",
+            "first in the Console.')
+    )
+  }
+}
+if (!require(thesisdown)) {
+  if (params$`Install needed packages for {thesisdown}`) {
+    remotes::install_github("ismayc/thesisdown")
+  } else {
+    stop(
+      paste(
+        "You need to run",
+        'remotes::install_github("ismayc/thesisdown")',
+        "first in the Console."
+      )
+    )
+  }
+}
+library(thesisdown)
+# Set how wide the R output will go
+options(width = 70)
+```
+
+```{r eval=!knitr::is_latex_output(), child=here::here("prelims", "00--prelim.Rmd")}
+
+```
+
+```{r eval=!knitr::is_latex_output(), child=here::here("prelims", "00-abstract.Rmd")}
+
+```
+
+<!-- The {.unnumbered} option here means that the introduction will be 
+"Chapter 0." You can also use {-} for no numbers on chapters.
+-->
+
+# Introducción {.unnumbered}
+
+Comúnmente el análisis de datos de educación se enfoca en encontrar interacciones entre estudiantes y ámbitos demográficos o de entorno, esto se debe a que de alguna forma es posible generalizar que el resultado de una prueba se ve influida por variables como el lugar de residencia o el nivel socio-económico del estudiante. Por otra parte es claro que dichos datos de educación tienen estructuras jerárquicas que pueden ser de interés general, por ejemplo, Departamento de residencia, estrato, ubicación de la institución educativa, si es rural o urbana, si el establecimiento educativo es mixto o no, entre otras. Generalmente, las visualizaciones de personas en muestras de numerosas fases no son independientes, estas condiciones de datos no tienen la posibilidad de analizarse por medio de un modelo estadístico estándar que tiene supuestos precisos sobre la libertad de las visualizaciones personales. Las violaciones de dichos supuestos plantean inconvenientes con la inferencia de límites del modelo en el estudio estadístico tradicional. Adicional a esto, es también común en la entrega de resultados de pruebas educativas evadir agregaciones en los datos con el ánimo de estandarizar entregas, sin embargo, es posible que el análisis pueda llevara interpretaciones erradas lo que se puede catalogar como un caso de la paradoja de Simpson o efecto Yule-Simpson.
+
+En teoría, antes de diseñar un estudio experimental, se debe tener una pregunta de investigación precisa que se quiere resolver y luego se diseña un método de recolección de datos, que permita el despliegue de modelos que solución la cuestión en discusión. sin embargo, es común encontrarse con casos en los que se recopilan grandes cantidades de datos y luego se plantean preguntas.
+
+Este enfoque es permisible, pero es útil para investigar relaciones que no se tenían como prioridad o se desconocía que podían generarse durante la etapa de diseño y por ende aborda con diferente enfoque el diseño realizado. En este caso se pierde un factor clave en la investigación, la aleatorización de la selección, cuyo objetivo es mantener "bajo control" todos los efectos que no se pueden controlar en el experimento. Pero puede tiene ventajas metodológicas y logísticas reduciendo tiempos y costos de recolección.
+
+Para evaluar impactos o cambios en resultados a través del tiempo, la literatura es amplia y en particular para este trabajo se toma como punto de partida la relación más simple, utilizando desde un ANOVA de una vía hasta evaluar modelos mixtos, pasando por diferencias en diferencias, MANOVA, ANCOVA, MANCOVA. La idea general es poder indagar si a mayor nivel de agregación se presenta en los resultados la llamada paradoja de Simpson pues se parte de la hipótesis de que dado el diseño por Bloques Incompletos Balanceados (BIB) de la prueba, el efecto en los resultados debería ser nulo.
+
+
+El capitulo 1 explora el conjunto de datos Saber 11 del Icfes desde el año 2011 hasta el año 2019.
+
+En el capítulo 2 se profundizará (marco teorico) detrás de las diferentes metodologías a abordar para evaluar la problemática planteada.
+
+(metodología) El capítulo 3 aborda la problemática central del trabajo, implementando diferentes modelos de los revisados en el capítulo 2 y se comparan los resultados.
+
+Por último (resultados y conclusiones) encontradas y se abre puerta a la implementación de otras metodologías en trabajos posteriores.

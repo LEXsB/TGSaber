@@ -1,0 +1,125 @@
+# Análisis exploratorio de datos  {#EDA}
+## Introducción {.unnumbered}
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results=FALSE}
+library(thesisdown)
+library(knitr)
+library(tidyverse)
+library(dplyr)
+library(magrittr)
+library(ggplot2)
+library(data.table)
+library(lubridate)
+library(GADMTools)
+library(ggmap)
+library(ggrepel)
+library(patchwork)
+library(readxl)
+library(plotly)
+library(Hmisc)
+library(FactoMineR)
+library(factoextra)
+library(plm)
+library(Rmisc)
+library(kableExtra)
+library(readr)
+library(hrbrthemes)
+library(ggpubr)
+library(cowplot)
+library(gridExtra)
+library(scales)
+percent <- function(x, digits = 3, format = "f", ...) {
+  paste0(formatC(100 * x, format = format, digits = digits, ...), "%")
+}
+
+
+g_legend<-function(a.gplot){
+  tmp <- ggplot_gtable(ggplot_build(a.gplot))
+  leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+  legend <- tmp$grobs[[leg]]
+  return(legend)}
+tema <- theme(axis.line=element_blank(),
+              axis.text.x=element_blank(),
+              axis.text.y=element_blank(),
+              axis.ticks=element_blank(),
+              axis.title.x=element_blank(),
+              axis.title.y=element_blank(),
+              legend.position="none",
+              panel.border=element_blank())
+
+load("../00 - DATOS/17_sept_2021_7_55_PM_saber11.RData")
+
+```
+
+Para este trabajo buscamos encontrar patrones que nos permitan determinar si estadísticamente existe efecto, en el puntaje global de la prueba explorando los diferentes niveles que entrega la prueba, como el sector de la institución [Oficial o Privado], la jornada [Diurna o Nocturna], el municipio, el departamento, el género de los estudiantes, etc.
+
+
+## Pruebas Saber - Formato del cuadernillo {#cuadernillo}
+
+El Examen de Estado de la Educación Media, ICFES SABER 11, que aplica el Instituto Colombiano para la Evaluación de la Educación (ICFES) es un instrumento estandarizado para la evaluación externa, que conjuntamente con los exámenes que se aplican en los grados 5, 9 y al finalizar el pregrado, hace parte de los instrumentos que conforman el Sistema Nacional de Evaluación. Además de ser una herramienta que retroalimenta al Sistema Educativo.
+
+A partir de 2018 las pruebas saber 11 se llevan a cabo con un cambio en el formato del cuadernillo, los cuadernillos plegados se utilizaban en su mayoría para las pruebas Saber 11 o en algunas formas de los cuadernillos de las pruebas Saber T y T y Saber Pro, cuando la cantidad de páginas era desde 12 hasta 36 páginas y se lograba bajo impresión en tecnologías offset, donde el cuadernillo se imprimía en un pliego de papel y posteriormente se plegada para quedar en el tamaño de 1/16avo. Por su lado, los cuadernillos cosidos se utilizaban en mayor medida en las pruebas Saber Pro y T y T, cuando la variabilidad de estos y la cantidad de preguntas sobrepasaban las 36 páginas. Si bien estos se podían imprimir en tecnología offset, había que realizar un paso adicional y era refilar el pliego en cuartillas para después pasar al proceso de cosido.
+
+La primera aproximación al estándar de cuadernillos se dio cuando la entidad paso de solicitar requerimientos de impresión offset a impresión digital en el año 2017 con la prueba Patrulleros, con esta prueba se encontró que las máquinas de impresión digital solo imprimían en cuartillas, esto implica que esta metodología restringe la impresión a cuadernillos cosidos, sin embargo esto permitía tener mayor variabilidad de formas, color y bondades, como la marca de agua. 
+
+Claramente la prueba de ascenso patrulleros es un referente que permite demostrar que este proceso de impresión fue exitoso para la prevención y detección de fraude, y, por lo tanto, sustenta en parte la decisión de la Entidad de la impresión de las pruebas de Estado. Cabe aclarar que en la vigencia 2017, para prevención y detección de fraude, se solicitó la inclusión, en el cuadernillo, de un código alfanumérico conformado por 3 bloques de 4 caracteres con el fin de eliminar la codificación de la forma que se encontraba visible en el cuadernillo impreso. Sin embargo, no fue posible su aplicación y por tanto no se obtuvieron los resultados esperados, teniendo en cuenta que la tecnología offset no permitía que dicho código incluyera una parte aleatoria por examinado. 
+
+Se debe tener en cuenta que para pruebas bajo metodologías de Bloques Incompletos Balanceados (BIB), como las que aplica el Icfes, las tecnologías basadas en impresión digital favorecen los procesos cuando el número de formas es muy variable, como es el caso de las pruebas de Estado. Asimismo, la marca de agua, que es una de las bondades que ha identificado el Icfes, permite disuadir y/o identificar al examinando que toma fotos del material.
+
+Hacia el equipo de trabajo el cambio lo solicitó la Dirección de Producción y Operaciones y la Subdirección de Aplicación de Instrumentos. Surgió a partir de la prueba patrulleros 2017 donde se incursionó en impresión digital con alta variabilidad y marca de agua e impresión a color de cuadernillos cosido al caballete.
+
+A pesar de que el cambio representa muchas ventajas para la entidad en términos de control, por ejemplo el fraude, no hay un estudio oficial que evalúe si este cambio tuvo algún efecto en el resultado de las pruebas.
+
+
+## Análisis de datos {#eda_numb}
+Los datos utilizados pueden ser consultados en  \href{https://www.datos.gov.co/}{www.datos.gov.co} o en \href{https://www.icfes.gov.co/investigadores-y-estudiantes-posgrado/acceso-a-bases-de-datos}{www.icfes.gov.co}.
+
+
+Para el objeto de este trabajo, se tiene en cuenta que para las aplicaciones a partir de 2018 hay un nuevo cuadernillo por lo que para este trabajo se toman cuatro aplicaciones antes del cambio y cuatro después del cambio con el fin de controlar de forma sintética el balance entre grupos.
+
+Los datos corresponden en total a  2.270.279 estudiantes que han presentados las pruebas de estado saber 11 desde 2016 hasta 2019, de los cuales 1.120.523 presentaron la prueba antes del cambio y 1.129.756 estudiantes después. 
+
+
+Aunque parece un tema de poca magnitud, gráficamente, como se ve en la figura \ref{bar_cuad_periodo} es posible evidenciar que existe algún tipo de relación entre el cambio de cuadernillo y un descenso en el puntaje global:
+
+```{r bar_cuad_periodo, warnings=FALSE, messages=FALSE, fig.cap="Distribución de los estudiantes por periodo de aplicación", fig.width=6, fig.height=5, echo=FALSE}
+datos <- saber11 %>%
+  dplyr::group_by(PERIODO, CUADERNILLO) %>%
+  dplyr::summarise(PUNT_GLOBAL = mean(PUNT_GLOBAL))
+p1 <- ggplot(data = datos) +
+  geom_bar(aes(x = PERIODO, y=PUNT_GLOBAL, fill = CUADERNILLO),
+           stat="identity") +
+  xlab("") + ylab ("Puntaje  global promedio") + xlab ("") +
+  scale_y_continuous(label=comma,
+                     limits = c(0, max(datos$PUNT_GLOBAL)+
+                                  (mean(datos$PUNT_GLOBAL)/4))) +
+  geom_text(data = datos, aes(x = PERIODO, y = PUNT_GLOBAL,
+                              label=round(PUNT_GLOBAL, 1)),
+            position=position_dodge(width = 0.5), vjust=-1, size = 2) +
+  theme(legend.position="bottom",
+        axis.text.x = element_text(angle=90))
+
+datos <- saber11 %>%
+  dplyr::group_by(PERIODO, CUADERNILLO) %>%
+  dplyr::summarise(counting = n_distinct(ESTU_CONSECUTIVO))
+p2 <- ggplot(data = datos) +
+  geom_bar(aes(x = PERIODO, y=counting, fill = CUADERNILLO),
+           stat="identity") +
+  xlab("") + ylab ("") +
+  scale_y_continuous(label=comma,
+                     limits = c(0, max(datos$counting)+
+                                  (mean(datos$counting)/2))) +
+  geom_text(data = datos, aes(x = PERIODO,
+                              y=counting, label=round(counting, 1)),
+            position=position_dodge(width = 0.5), vjust=-1, size = 2)+
+  theme(legend.position="bottom",
+        axis.text.x = element_text(angle=90))
+mylegend<-g_legend(p1)
+
+grid.arrange(p1 + theme(legend.position="none"),
+                   p2 + theme(legend.position="none"),
+                   mylegend,
+                   layout_matrix = rbind(c(1,2),c(3,3)),
+                   heights=c(10, 1))
+```
+
